@@ -10,7 +10,7 @@ mongo = PyMongo(app, uri="mongodb://localhost:27017/mars_app")
 
 @app.route('/')
 def home():
-    Mars_dict = mongo.db.collection.find_one()
+    Mars_dict = mongo.db.Mars_dict.find_one()
     return render_template('index.html', mars=Mars_dict)
 
 
@@ -25,7 +25,7 @@ def scrape():
     mongo.db.collection.update({}, Mars_dict, upsert=True)
 
     # Redirect back to home page
-    return redirect("/")
+    return redirect("/", code=302)
 
 
 if __name__ == "__main__":
