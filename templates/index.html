@@ -37,7 +37,6 @@
         </div>
       </div>
       <div class = "col-md-4">
-        <div class="border">
           <h5>Mars Facts</h5>
           <br>
             {{mars.Mars_Table|safe}}
@@ -51,9 +50,9 @@
     </div>
     <div class="row">
      {% for item in mars.Hemi_Pics %}
-     <div class="col-6">
+     <div class="col-4">
         <div>
-          <img width="512 px" height="512 px" src="{{ item.img_url }}">
+          <img width="200" height="200" src="{{ item.img_url }}">
        </div>
       </div>
      {% endfor %}
