@@ -5,7 +5,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def init_browser():
     # Set up Splinter
-    # @NOTE: Replace the path with your actual path to the chromedriver
+    # Replace the path with your actual path to the chromedriver
     executable_path = {"executable_path": ChromeDriverManager().install()}
     return Browser("chrome", **executable_path, headless=False)
 
@@ -26,10 +26,12 @@ def scrape():
 
     # URL of Mars Image to be scraped
     website_image_url='https://spaceimages-mars.com/'
-    featured_image_url='https://spaceimages-mars.com/image/featured/mars3.jpg'
-    browser.visit(featured_image_url)
+    browser.visit(website_image_url)
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
+    obtain_photo = soup.find_all('img')
+    choosen_photo = soup.find_all('img')[1]["src"]
+    featured_image_url = website_image_url + choosen_photo
 
     # URL of Mars Table to be scraped
     facts_url = 'https://galaxyfacts-mars.com/'
@@ -47,30 +49,32 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, 'html.parser')
     all_angles=soup.find('div', class_='collapsible results')
-    hemi_photo_find=all_angles.find_all('div',class_='item')
+    hemi_photo_find=all_angles.find_all('div', class_='item')
     hemisphere_image_urls = []
-    for item in hemi_photo_find:
+
+    for item in hemi_photo_find:    
         hemisphere = item.find('div', class_="description")
         title = hemisphere.h3.text
     
-        hemisphere_link = hemisphere.a["href"]
-        browser.visit(hemi_url + hemisphere_link)
+        hemi_link = hemisphere.a["href"]
+        browser.visit(hemi_url + hemi_link)
     
-        image_html = browser.html
-        image_soup = BeautifulSoup(image_html, 'html.parser')
+        jpg_html = browser.html
+        jpg_soup = BeautifulSoup(jpg_html, 'html.parser')
     
-        image_link = image_soup.find('div', class_='downloads')
-        image_url = image_link.find('li').a['href']
+        jpg_url = jpg_soup.find('li').a['href']
 
-        image_dict = {}
-        image_dict['title'] = title
-        image_dict['img_url'] = image_url
+        hemi_dict={
+        'title': title,
+        'img_url': hemi_url+jpg_url
+    }
     
-        hemisphere_image_urls.append(image_dict)
+        hemisphere_image_urls.append(hemi_dict)
+   
 
     Mars_dict = {
-        "News_Title": news_title,
-        "News_p": news_p,
+        "news_title": news_title,
+        "news_p": news_p,
         "featured_image_url": featured_image_url,
         "Mars_Table": Mars_Table,
         "Hemi_Pics": hemisphere_image_urls

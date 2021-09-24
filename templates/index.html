@@ -1,2 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission To Mars</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron text-center">
+      <h1>Mission To Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Blast Off!</a></p>
+    </div>
+    <div class="row">
+        <div class = "col-md-12">
+            <h2><u>Latest Mars News</u></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class = "col-md-12">
+          <h4>{{mars.news_title}}</h4>
+          <p>{{mars.news_p}}</p>
+        </div>
+    </div>
+    <div class="row">
+      <div class = "col-md-8 border">
+        <div class="border">
+        <h2 class="">Featured Mars Image</h2>
+        <br>
+        <img src={{mars.featured_image_url}} alt="Featured Mars Image">
+        </div>
+      </div>
+      <div class = "col-md-4">
+        <div class="border">
+          <h5>Mars Facts</h5>
+          <br>
+            {{mars.Mars_Table|safe}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 offset-4">
+        <h2>Mars Hemispheres</h2>
+      </div>
+    </div>
+    <div class="row">
+     {% for item in mars.Hemi_Pics %}
+     <div class="col-6">
+        <div>
+          <img width="512 px" height="512 px" src="{{ item.img_url }}">
+       </div>
+      </div>
+     {% endfor %}
+    </div>
+  </div>
+</body>
+
+</html>
